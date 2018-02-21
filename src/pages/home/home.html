@@ -1,14 +1,29 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color="warning">
     <ion-title>
-      Ionic Blank
+      Alert Controller
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+
+<!--<ion-item>
+  <ion-label floating>Name</ion-label>
+  <ion-input type="text" [(ngModel)]="namePerson"></ion-input>
+</ion-item>
+<button ion-button round block color="danger" (click)="showAlert(namePerson);">Show Alert</button>
+-->
+
+  Hello, {{ fullname }}
+  <ion-item>
+    <ion-label fixed>Your name</ion-label>
+    <ion-input type="text" [(ngModel)]="fullname"  ></ion-input>
+  </ion-item>
+
+  <ion-list >
+    <button (click)="showName(item)" ion-item *ngFor="let item of groups" >
+      {{item.id}} {{item.name}}
+    </button>
+  </ion-list>
 </ion-content>
