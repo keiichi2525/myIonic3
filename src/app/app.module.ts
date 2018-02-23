@@ -5,6 +5,7 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { HttpClientModule } from '@angular/common/http';
+import { HttpModule } from '@angular/http';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -14,7 +15,11 @@ import { TabsPage } from './../pages/tabs/tabs';
 import { SettingPage } from './../pages/setting/setting';
 import { MessagePage } from './../pages/message/message';
 import { ContactPage } from './../pages/contact/contact';
+import { LoginPage } from './../pages/login/login';
+
+// provider
 import { UserProvider } from '../providers/user/user';
+import { LoginProvider } from '../providers/login/login';
 
 @NgModule({
   declarations: [
@@ -26,10 +31,12 @@ import { UserProvider } from '../providers/user/user';
     MessagePage,
     ContactPage,
     SettingPage,
+    LoginPage
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
+    HttpModule,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
@@ -41,13 +48,16 @@ import { UserProvider } from '../providers/user/user';
     TabsPage,
     MessagePage,
     ContactPage,
-    SettingPage
+    SettingPage,
+    LoginPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
+    {provide: 'API_URL',useValue: 'http://localhost:3000'},
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    UserProvider
+    UserProvider,
+    LoginProvider
   ]
 })
 export class AppModule {}

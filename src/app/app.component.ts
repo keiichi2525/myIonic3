@@ -7,12 +7,13 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 //import { HomePage } from '../pages/home/home';
 //import { MainPage } from './../pages/main/main';
 import { TabsPage } from './../pages/tabs/tabs';
+import { LoginPage } from './../pages/login/login';
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = TabsPage;
+  rootPage:any;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
     platform.ready().then(() => {
@@ -20,6 +21,10 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       splashScreen.hide();
+
+      let token = localStorage.getItem('token');
+      if (token) this.rootPage = TabsPage;
+      else this.rootPage = LoginPage;
     });
   }
 }
