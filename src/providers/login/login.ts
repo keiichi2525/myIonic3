@@ -15,6 +15,7 @@ export class LoginProvider {
       let headers = new Headers({ 'Content-Type': 'application/json'});
       let options = new RequestOptions({ headers: headers });
       let body = {username: username, password: password};
+      
       this.http.post(this.url + '/users/login',body,options)
       .map(res => res.json())
       .subscribe(data => {

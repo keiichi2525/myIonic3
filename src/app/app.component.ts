@@ -33,12 +33,12 @@ export class MyApp {
       
     });
 
-    events.subscribe('logout', () => {
-      console.log('logout');
-      // remove token
-      localStorage.removeItem('token');
-      this.rootPage = LoginPage;
-    });
+    //events.subscribe('logout', () => {
+    //  console.log('logout');
+    //  // remove token
+    //  localStorage.removeItem('token');
+    //  this.rootPage = LoginPage;
+    //});
 
   }
 }
