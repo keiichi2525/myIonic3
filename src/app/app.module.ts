@@ -16,10 +16,12 @@ import { SettingPage } from './../pages/setting/setting';
 import { MessagePage } from './../pages/message/message';
 import { ContactPage } from './../pages/contact/contact';
 import { LoginPage } from './../pages/login/login';
+import { AddCustomerPage } from './../pages/add-customer/add-customer';
 
 // provider
 import { UserProvider } from '../providers/user/user';
 import { LoginProvider } from '../providers/login/login';
+// import { CustomerProvider } from '../providers/customer/customer';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,8 @@ import { LoginProvider } from '../providers/login/login';
     MessagePage,
     ContactPage,
     SettingPage,
-    LoginPage
+    LoginPage,
+    AddCustomerPage
   ],
   imports: [
     BrowserModule,
@@ -49,15 +52,16 @@ import { LoginProvider } from '../providers/login/login';
     MessagePage,
     ContactPage,
     SettingPage,
-    LoginPage
+    LoginPage,
+    AddCustomerPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: 'API_URL',useValue: 'http://localhost:3000'},
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    { provide: 'API_URL', useValue: 'http://192.168.1.17:3000' },
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
     UserProvider,
     LoginProvider
   ]
 })
-export class AppModule {}
+export class AppModule { }
