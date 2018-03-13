@@ -1,6 +1,15 @@
 
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController, Events, App } from 'ionic-angular';
+import { IonicPage, 
+  NavController, 
+  NavParams, 
+  LoadingController, 
+  Events, 
+  App,
+  ActionSheetController,
+  Platform,
+  AlertController
+} from 'ionic-angular';
 
 import { MapPage } from './../map/map';
 import { LoginPage } from './../login/login';
@@ -37,7 +46,10 @@ export class MainPage {
     public customerProvider: CustomerProvider,
     public loadingCtrl: LoadingController,
     public events: Events,
-    public app: App
+    public app: App,
+    public actionSheetCtrl: ActionSheetController,
+    public platform: Platform,
+    public alertCtrl: AlertController
   ) {
     //this.users.push({ name: 'John Doe', email: 'john@mail.com' });
     //this.users.push({ name: 'Steve Job', email: 'steve@mail.com' });
@@ -110,4 +122,83 @@ export class MainPage {
   add() {
     this.navCtrl.push(AddCustomerPage);
   }
+
+  removeConfirm(customer: any) {
+    let confirm = this.alertCtrl.create({
+      title: 'Confirmation',
+      message: 'ต้องการลบ ' 
+      + customer.first_name + ' ' + customer.last_name 
+      +' ใช่หรือไม่?',
+      buttons: [
+        { text: 'ยกเลิก', handler: () => {
+          //
+         } },
+        {
+          text: 'ลบข้อมูล',
+          handler: () => {
+            // this.customerProvider.remove(this.token, customer.id)
+            //   .then((data: any) => {
+            //     if (data.ok) {
+            //       this.ionViewWillEnter();
+            //     }
+            //   }, (error) => {
+            //     console.log(error);
+            //   });
+            this.customerProvider.remove(this.token, customer.id)
+            .subscribe(res => {
+              if (res.ok) {
+                this.ionViewWillEnter();
+              }
+            }, error => {
+              console.log(error);
+            });
+          }
+        }
+      ]
+    });
+    confirm.present();
+  } 
+
+  showMenu(customer: any) {
+    let actionSheet = this.actionSheetCtrl.create({
+      title: 'Action menu',
+      buttons: [
+        {
+          text: 'ลบข้อมูล',
+          role: 'destructive',
+          icon: !this.platform.is('ios') ? 'trash' : null,
+          handler: () => {
+            this.removeConfirm(customer);
+          }
+        },
+        {
+          text: 'แก้ไข',
+          icon: !this.platform.is('ios') ? 'create' : null,
+          handler: () => {
+            this.navCtrl.push(AddCustomerPage, { id: customer.id });
+          }
+        },
+        {
+          text: 'ดู/กำหนด แผนที่',
+          icon: !this.platform.is('ios') ? 'map' : null,
+          handler: () => {
+            this.navCtrl.push(MapPage, { customer: customer });
+          }
+        },
+        {
+          text: 'โทร',
+          icon: !this.platform.is('ios') ? 'call' : null,
+          handler: () => { }
+        },
+        {
+          text: 'ยกเลิก',
+          role: 'cancel',
+          icon: !this.platform.is('ios') ? 'close' : null,
+          handler: () => { }
+        }
+      ]
+    });
+    actionSheet.present();
+  }
+
 }

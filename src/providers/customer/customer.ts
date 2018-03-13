@@ -47,4 +47,30 @@ export class CustomerProvider {
     };
     return this.http.post(this.url + '/customers', body, options).map(res => res.json())
   }
+
+  remove(token: string, customerId: number) {
+    // return new Promise((resolve, reject) => {
+    //   let headers = new Headers({
+    //     'Content-Type': 'application/json',
+    //     'x-access-token': token
+    //   });
+    //   let options = new RequestOptions({ headers: headers });
+
+    //   this.http.delete(`${this.url}/customers/${customerId}`, options)
+    //     .map(res => res.json())
+    //     .subscribe(data => {
+    //       resolve(data)
+    //     }, err => {
+    //       reject(err)
+    //     });
+    // });
+    let headers = new Headers({
+      'Content-Type': 'application/json',
+      'x-access-token': token
+    });
+    let options = new RequestOptions({ headers: headers });
+    return this.http.delete(this.url + '/customers/' + customerId, options)
+    .map(res => res.json())
+  }
+
 }
