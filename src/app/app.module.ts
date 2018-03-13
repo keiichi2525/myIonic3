@@ -6,6 +6,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
+import { Camera } from '@ionic-native/camera';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -61,7 +62,8 @@ import { LoginProvider } from '../providers/login/login';
     { provide: 'API_URL', useValue: 'http://192.168.1.17:3000' },
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     UserProvider,
-    LoginProvider
+    LoginProvider,
+    Camera
   ]
 })
 export class AppModule { }

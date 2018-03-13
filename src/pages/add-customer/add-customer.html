@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color="primary">
     <ion-title>เพิ่มข้อมูลลูกค้า</ion-title>
     <ion-buttons end>
       <button ion-button icon-left (click)="save()">
@@ -24,11 +24,11 @@
       <ion-input type="text" [(ngModel)]="lastName"></ion-input>
     </ion-item>
 
-    <ion-item>
+    <!-- <ion-item>
       <ion-label>Start Time</ion-label>
       <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="birthDate"></ion-datetime>
 
-    </ion-item>
+    </ion-item> -->
 
 
     <ion-item>
@@ -70,14 +70,14 @@
 
       <ion-item>
         <ion-avatar item-left>
-          <img src="./assets/img/camera.png">
+          <img src="../../assets/imgs/camera.png">
         </ion-avatar>
         <h2>Take or Browse picture</h2>
         <p>customer's picture</p>
       </ion-item>
 
       <img [src]="base64Image" *ngIf="base64Image">
-      <img src="./assets/img/placeholder-customer.png" *ngIf="!base64Image">
+      <img src="../../assets/imgs/placeholder-customer.png" *ngIf="!base64Image">
 
       <ion-row>
         <ion-col>

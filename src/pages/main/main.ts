@@ -60,7 +60,18 @@ export class MainPage {
       .subscribe(res => {
         console.log('loading.....')
         loader.dismiss();
-        this.customers = res;
+        // this.customers = res;
+        res.forEach(v => {
+          let obj = {
+            id: v.id,
+            first_name: v.first_name,
+            last_name: v.last_name,
+            sex: v.sex,
+            email: v.email,
+            image: v.image ? 'data:image/jpeg;base64,' + v.image : null
+          };
+          this.customers.push(obj);
+        });
       }, error => {
         loader.dismiss();
         console.log(error);

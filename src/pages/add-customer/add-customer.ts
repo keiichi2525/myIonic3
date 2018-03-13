@@ -1,7 +1,9 @@
 
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import * as moment from 'moment';
+// import * as moment from 'moment';
+import { Camera, CameraOptions } from '@ionic-native/camera';
+
 // providers
 import { CustomerProvider } from './../../providers/customer/customer';
 
@@ -16,17 +18,26 @@ export class AddCustomerPage {
   sexes: Array<{ id: number, name: string }> = [];
   groups: Array<{ id: number, name: string }> = [];
   token: string;
-  birthDate: any;
+  // birthDate: any;
+  sex: string;
+  email: string;
+  telephone: string;
+  firstName: string;
+  lastName: string;
+  customerTypeId: number;
+  base64Image: string;
+  imageData: string;
 
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
-    public customerProvider: CustomerProvider
+    public customerProvider: CustomerProvider,
+    private camera: Camera
   ) {
     this.sexes.push({ id: 1, name: 'ชาย' });
     this.sexes.push({ id: 2, name: 'หญิง' });
     this.token = localStorage.getItem('token');
-    this.birthDate = moment().format('YYYY-MM-DD');
+    // this.birthDate = moment().format('YYYY-MM-DD');
   }
 
   ionViewDidLoad() {
@@ -41,4 +52,63 @@ export class AddCustomerPage {
     });
   }
 
+  save() {
+    let customer = {
+      firstName: this.firstName,
+      lastName: this.lastName,
+      sex: this.sex,
+      email: this.email,
+      telephone: this.telephone,
+      customerTypeId: this.customerTypeId,
+      image: this.imageData
+    };
+    this.customerProvider.saveCustomer(this.token, customer)
+    .subscribe(res => {
+      console.log(res);
+      if (res.ok) {
+        alert('Success');
+      }
+    }, error => {
+      alert(error);
+    });
+  }
+
+  takePicture() {
+    const options: CameraOptions = {
+      targetWidth: 800,
+      targetHeight: 600,
+      correctOrientation: true,
+      quality: 100,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE
+    }
+
+    this.camera.getPicture(options).then((imageData) => {
+      this.imageData = imageData;
+      this.base64Image = 'data:image/jpeg;base64,' + imageData;
+    }, (err) => {
+      
+    });
+  }
+
+  browsePicture() {
+    const options: CameraOptions = {
+      targetWidth: 800,
+      targetHeight: 600,
+      correctOrientation: true,
+      quality: 100,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE
+    }
+
+    this.camera.getPicture(options).then((imageData) => {
+      this.imageData = imageData;
+      this.base64Image = 'data:image/jpeg;base64,' + imageData;
+    }, (err) => {
+
+    });
+  }
 }
