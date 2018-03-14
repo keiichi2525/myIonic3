@@ -1,10 +1,11 @@
 
 import { Component } from '@angular/core';
-import { IonicPage, 
-  NavController, 
-  NavParams, 
-  LoadingController, 
-  Events, 
+import {
+  IonicPage,
+  NavController,
+  NavParams,
+  LoadingController,
+  Events,
   App,
   ActionSheetController,
   Platform,
@@ -60,7 +61,7 @@ export class MainPage {
     this.navCtrl.push(MapPage, { customer: _customer, cusotmers: this.customers });
   }
 
-  ionViewWillEnter() {
+  getCustomers() {
     console.log('hello MainPage');
     let loader = this.loadingCtrl.create({
       content: 'Please wait',
@@ -107,7 +108,9 @@ export class MainPage {
     // }, error => {
     //   loader.dismiss();
     // });  
-
+  }
+  ionViewWillEnter() {
+    this.getCustomers();
   }
 
   logout() {
@@ -126,13 +129,15 @@ export class MainPage {
   removeConfirm(customer: any) {
     let confirm = this.alertCtrl.create({
       title: 'Confirmation',
-      message: 'ต้องการลบ ' 
-      + customer.first_name + ' ' + customer.last_name 
-      +' ใช่หรือไม่?',
+      message: 'ต้องการลบ '
+        + customer.first_name + ' ' + customer.last_name
+        + ' ใช่หรือไม่?',
       buttons: [
-        { text: 'ยกเลิก', handler: () => {
-          //
-         } },
+        {
+          text: 'ยกเลิก', handler: () => {
+            //
+          }
+        },
         {
           text: 'ลบข้อมูล',
           handler: () => {
@@ -145,19 +150,19 @@ export class MainPage {
             //     console.log(error);
             //   });
             this.customerProvider.remove(this.token, customer.id)
-            .subscribe(res => {
-              if (res.ok) {
-                this.ionViewWillEnter();
-              }
-            }, error => {
-              console.log(error);
-            });
+              .subscribe(res => {
+                if (res.ok) {
+                  this.getCustomers();
+                }
+              }, error => {
+                console.log(error);
+              });
           }
         }
       ]
     });
     confirm.present();
-  } 
+  }
 
   showMenu(customer: any) {
     let actionSheet = this.actionSheetCtrl.create({
@@ -199,6 +204,64 @@ export class MainPage {
       ]
     });
     actionSheet.present();
+  }
+
+  search(event) {
+    let query = event.target.value;
+    if (query && query.trim() != '') {
+      this.customers = [];
+      this.customerProvider.search(this.token, query)
+        .subscribe(res => {
+          res.forEach(v => {
+            let obj = {
+              id: v.id,
+              first_name: v.first_name,
+              last_name: v.last_name,
+              sex: v.sex,
+              email: v.email,
+              image: v.image ? 'data:image/jpeg;base64,' + v.image : null
+            };
+            this.customers.push(obj);
+          });
+        }, error => {
+          console.log(error);
+        });
+    }else {
+      this.getCustomers();
+    }
+
+  }
+
+  doRefresh(refresher) {
+    console.log('refreshing');
+    // let loader = this.loadingCtrl.create({
+    //   content: 'Please wait',
+    //   spinner: 'dots'
+    // });
+    // loader.present();
+    refresher.complete();
+    this.customers = [];
+    this.customerProvider.getCustomers(this.token)
+      .subscribe(res => {
+        console.log('loading.....')
+        // loader.dismiss();
+        // this.customers = res;
+        res.forEach(v => {
+          let obj = {
+            id: v.id,
+            first_name: v.first_name,
+            last_name: v.last_name,
+            sex: v.sex,
+            email: v.email,
+            image: v.image ? 'data:image/jpeg;base64,' + v.image : null
+          };
+          this.customers.push(obj);
+        });
+      }, error => {
+        // loader.dismiss();
+        refresher.complete();
+        console.log(error);
+      });
   }
 
 }
