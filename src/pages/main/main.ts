@@ -197,7 +197,7 @@ export class MainPage {
           text: 'โทร',
           icon: !this.platform.is('ios') ? 'call' : null,
           handler: () => {
-            this.callnumber.callNumber("18001010101", true)
+            this.callnumber.callNumber(customer.telephone, true)
               .then(() => console.log('Launched dialer!'))
               .catch(() => console.log('Error launching dialer'));
           }
