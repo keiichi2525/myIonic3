@@ -11,6 +11,7 @@ import {
   Platform,
   AlertController
 } from 'ionic-angular';
+import { CallNumber } from '@ionic-native/call-number';
 
 import { MapPage } from './../map/map';
 import { LoginPage } from './../login/login';
@@ -50,7 +51,8 @@ export class MainPage {
     public app: App,
     public actionSheetCtrl: ActionSheetController,
     public platform: Platform,
-    public alertCtrl: AlertController
+    public alertCtrl: AlertController,
+    public callnumber: CallNumber
   ) {
     //this.users.push({ name: 'John Doe', email: 'john@mail.com' });
     //this.users.push({ name: 'Steve Job', email: 'steve@mail.com' });
@@ -81,6 +83,7 @@ export class MainPage {
             last_name: v.last_name,
             sex: v.sex,
             email: v.email,
+            telephone: v.telephone,
             image: v.image ? 'data:image/jpeg;base64,' + v.image : null
           };
           this.customers.push(obj);
@@ -193,7 +196,11 @@ export class MainPage {
         {
           text: 'โทร',
           icon: !this.platform.is('ios') ? 'call' : null,
-          handler: () => { }
+          handler: () => {
+            this.callnumber.callNumber("18001010101", true)
+              .then(() => console.log('Launched dialer!'))
+              .catch(() => console.log('Error launching dialer'));
+          }
         },
         {
           text: 'ยกเลิก',
@@ -219,6 +226,7 @@ export class MainPage {
               last_name: v.last_name,
               sex: v.sex,
               email: v.email,
+              telephone: v.telephone,
               image: v.image ? 'data:image/jpeg;base64,' + v.image : null
             };
             this.customers.push(obj);
@@ -226,7 +234,7 @@ export class MainPage {
         }, error => {
           console.log(error);
         });
-    }else {
+    } else {
       this.getCustomers();
     }
 
@@ -253,6 +261,7 @@ export class MainPage {
             last_name: v.last_name,
             sex: v.sex,
             email: v.email,
+            telephone: v.telephone,
             image: v.image ? 'data:image/jpeg;base64,' + v.image : null
           };
           this.customers.push(obj);

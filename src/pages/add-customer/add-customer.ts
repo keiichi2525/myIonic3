@@ -110,7 +110,7 @@ export class AddCustomerPage {
       targetHeight: 600,
       correctOrientation: true,
       quality: 100,
-      allowEdit: true,
+      // allowEdit: true,
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE
@@ -130,7 +130,7 @@ export class AddCustomerPage {
       targetHeight: 600,
       correctOrientation: true,
       quality: 100,
-      allowEdit: true,
+      // allowEdit: true,
       destinationType: this.camera.DestinationType.DATA_URL,
       sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
       encodingType: this.camera.EncodingType.JPEG,

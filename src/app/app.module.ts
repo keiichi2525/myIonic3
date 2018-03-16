@@ -7,6 +7,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 import { Camera } from '@ionic-native/camera';
+import { CallNumber } from '@ionic-native/call-number';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -63,7 +64,8 @@ import { LoginProvider } from '../providers/login/login';
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     UserProvider,
     LoginProvider,
-    Camera
+    Camera,
+    CallNumber
   ]
 })
 export class AppModule { }
