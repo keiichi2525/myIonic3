@@ -8,6 +8,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 import { Camera } from '@ionic-native/camera';
 import { CallNumber } from '@ionic-native/call-number';
+// Google map
+import { AgmCoreModule } from '@agm/core';
+//
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -42,7 +45,10 @@ import { LoginProvider } from '../providers/login/login';
     BrowserModule,
     HttpClientModule,
     HttpModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyAt7F7aqe-5vZAKEdUHdAQeQdveYvScjLg'
+    })
   ],
   bootstrap: [IonicApp],
   entryComponents: [

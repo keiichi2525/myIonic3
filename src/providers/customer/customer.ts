@@ -54,6 +54,17 @@ export class CustomerProvider {
     return this.http.post(this.url + '/customers', body, options).map(res => res.json())
   }
 
+  saveMap(token: string, customerId: any, lat: string, lng: string) {
+    let headers = new Headers({ 'Content-Type': 'application/json', 'x-access-token': token });
+    let options = new RequestOptions({ headers: headers });
+    let body = {
+      customerId: customerId,
+      lat: lat,
+      lng: lng
+    };
+    return this.http.post(this.url + '/customers/save-map', body, options).map(res => res.json())
+  }
+
   updateCustomer(token: string, customer: any) {
     let headers = new Headers({ 'Content-Type': 'application/json', 'x-access-token': token });
     let options = new RequestOptions({ headers: headers });
