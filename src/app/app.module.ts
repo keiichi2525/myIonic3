@@ -10,6 +10,8 @@ import { Camera } from '@ionic-native/camera';
 import { CallNumber } from '@ionic-native/call-number';
 // Google map
 import { AgmCoreModule } from '@agm/core';
+import { Geolocation } from '@ionic-native/geolocation';
+import { LaunchNavigator } from '@ionic-native/launch-navigator';
 //
 
 import { MyApp } from './app.component';
@@ -66,12 +68,14 @@ import { LoginProvider } from '../providers/login/login';
   providers: [
     StatusBar,
     SplashScreen,
-    { provide: 'API_URL', useValue: 'http://192.168.43.168:3000' },
+    { provide: 'API_URL', useValue: 'http://192.168.1.12:3000' },
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     UserProvider,
     LoginProvider,
     Camera,
-    CallNumber
+    CallNumber,
+    Geolocation,
+    LaunchNavigator
   ]
 })
 export class AppModule { }
